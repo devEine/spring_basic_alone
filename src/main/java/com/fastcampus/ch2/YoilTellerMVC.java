@@ -5,28 +5,41 @@ import java.util.Calendar;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class YoilTellerMVC {
+	//requried=true (í•„ìˆ˜ì…ë ¥)ìƒí™©ì—ì„œ ë¯¸ì…ë ¥ì‹œ ì˜ˆì™¸ì²˜ë¦¬ 
+	@ExceptionHandler(Exception.class)
+	public String catcher(Exception ex) {
+		ex.printStackTrace();
+		return "yoilError";
+	}
+	
     @RequestMapping("/getYoilMVC") // http://localhost/ch2/getYoilMVC
-    public void main(int year, int month, int day, Model model) {
+    public String main(@RequestParam(required = true) int year, 
+    		@RequestParam(required = true) int month, 
+    		@RequestParam(required = true) int day, 
+    		Model model) {
  
-        // 1. À¯È¿¼º °Ë»ç
+        // 1. ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
     	//if(!isValid(year, month, day)) 
-    		//return "yoilError";  // À¯È¿ÇÏÁö ¾ÊÀ¸¸é, /WEB-INF/views/yoilError.jsp·Î ÀÌµ¿
+    		//return "yoilError";  // ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, /WEB-INF/views/yoilError.jspï¿½ï¿½ ï¿½Ìµï¿½
     	
-        // 2. Ã³¸®
+        // 2. Ã³ï¿½ï¿½
     	char yoil = getYoil(year, month, day);
 
-        // 3. Model¿¡ ÀÛ¾÷ °á°ú ÀúÀå
+        // 3. Modelï¿½ï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("day", day);
         model.addAttribute("yoil", yoil);
         
-        // 4. ÀÛ¾÷ °á°ú¸¦ º¸¿©ÁÙ ViewÀÇ ÀÌ¸§À» ¹İÈ¯
-        //return "yoil"; // /WEB-INF/views/yoil.jsp
+        // 4. ï¿½Û¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Viewï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+        return "yoil"; // /WEB-INF/views/yoil.jsp
+        
     }
     
     private char getYoil(int year, int month, int day) {
@@ -34,13 +47,13 @@ public class YoilTellerMVC {
         cal.set(year, month - 1, day);
 
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        return " ÀÏ¿ùÈ­¼ö¸ñ±İÅä".charAt(dayOfWeek);
+        return " ì¼ì›”í™”ìˆ˜ëª©ê¸ˆí† ".charAt(dayOfWeek);
     }
     
     private boolean isValid(int year, int month, int day) {    
     	if(year==-1 || month==-1 || day==-1) 
     		return false;
     	
-    	return (1<=month && month<=12) && (1<=day && day<=31); // °£´ÜÈ÷ Ã¼Å© 
+    	return (1<=month && month<=12) && (1<=day && day<=31); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å© 
     }
 }
