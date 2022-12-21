@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-${year}년 ${month}월 ${day}일은 ${yoil}요일 입니다.<br>
-
+<!-- MyDate객체 생성하여 사용할 시 -->
+${myDate.year}년 ${myDate.month}월 ${myDate.day}일은 ${yoil}요일 입니다.
 </body>
 </html>
