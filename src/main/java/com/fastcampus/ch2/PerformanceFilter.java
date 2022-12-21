@@ -28,8 +28,11 @@ public class PerformanceFilter implements Filter {
 		// 2. ���� �Ǵ� ���� ���͸� ȣ��
 		chain.doFilter(request, response); 
 		
-		// 3. ��ó�� �۾�
-		System.out.print("["+((HttpServletRequest)request).getRequestURI()+"]");
+		// 3. 후처리 작업 
+		HttpServletRequest req = (HttpServletRequest)request;
+		String referer = req.getHeader("referer");
+		String method = req.getMethod();
+		System.out.print("["+referer+"] ->"+method+" ["+((HttpServletRequest)request).getRequestURI()+"]");
 		System.out.println("작동시간="+(System.currentTimeMillis()-startTime)+"ms");
 	}
 
